@@ -3,6 +3,7 @@ package demo.service;
 import java.util.List;
 import java.util.Map;
 
+import demo.module.ResponseBean;
 import demo.pojo.User;
 
 public interface RegService {

@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,6 +16,7 @@ import demo.config.CommonConfig;
 import demo.config.GlobalException;
 import demo.config.ResultEnum;
 import demo.dao.UserMapper;
+import demo.module.ResponseBean;
 import demo.pojo.User;
 import demo.service.RegService;
 import demo.utils.AES;
@@ -29,6 +32,9 @@ public class RegServiceImpl implements RegService {
 
 	@Autowired
 	private CommonConfig commonConfig;
+
+	@Autowired
+	private StringRedisTemplate stringRedisTemplate;
 
 	@Override
 	public List findAllRegUser() {
@@ -66,8 +72,29 @@ public class RegServiceImpl implements RegService {
 		} catch (Exception e) {
 			logger.error(e);
 		}
-		user.setPhone(params.get("phone").toString());
-		user.setEmail(params.get("email").toString());
+
+		String phone = "";
+		String email = "";
+		String verCode = params.get("verCode").toString();
+
+		if (commonConfig.isRegSwitch()) {
+			if (!StringUtils.isEmpty(params.get("phone"))) {
+				phone = params.get("phone").toString();
+
+				if (!verCode.equals(stringRedisTemplate.opsForValue().get(phone))) {
+					throw new GlobalException(ResultEnum.WORNG_CODE);
+				}
+			}
+
+			if (!StringUtils.isEmpty(params.get("email"))) {
+				email = params.get("email").toString();
+				if (!verCode.equals(stringRedisTemplate.opsForValue().get(email))) {
+					throw new GlobalException(ResultEnum.WORNG_CODE);
+				}
+			}
+		}
+		user.setPhone(phone);
+		user.setEmail(email);
 		user.setRegtime(regtime);
 
 		if (params.get("roleid") != null) {

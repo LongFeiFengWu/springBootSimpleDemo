@@ -1,11 +1,8 @@
 package demo.config;
 
 public enum ResultEnum {
-	UNKONW_ERROR(-1, "未知错误"), 
-	HAVE_REG(-2, "已注册"), 
-	SUCCESS(0, "成功"), 
-	NO_AUTH(204, "未授权"), 
-	NOT_FOUND(404, "资源未找到"),
+	UNKONW_ERROR(-1, "未知错误"), HAVE_REG(-2, "已注册"), SUCCESS(0, "成功"), NO_AUTH(204, "未授权"), NOT_FOUND(404,
+			"资源未找到"), WORNG_CODE(501, "验证码错误"),
 
 	;
 

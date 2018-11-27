@@ -8,6 +8,29 @@ spring:
         username: root
         password: root123
         driver-class-name: com.mysql.jdbc.Driver
+    mail:
+      host: smtp.qq.com
+      username: 1057150789@qq.com
+      password: fwyrcslurbbdbffb
+      properties: 
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+    redis:
+      database: 0
+      host: 127.0.0.1
+      port: 6379
+      password: 
+      pool.max-active: 8
+      pool.max-wait: -1
+      pool.max-idle: 8
+      pool.min-idle: 0
+      timeout: 500
+      
+      
+       
 
 mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml
@@ -16,9 +39,23 @@ mybatis:
 
 common:
   keyForAES: aeskey
+  verifyCodeStr: 23456789ABCDEFGHJKLMNPQRSTUVWXYZ
+  verifyCodeName: RANDOMVALIDATECODEKEY
+  verifyCodeSwitch: true
+  regSwitch: true
   
 ueditor:
   config: config.json
   unified: true
   upload-path: D:\\uploadForJava\\
   url-prefix: http://localhost:8081/upload
+  
+sms:
+  url: http://sms.91qxt.com/api/sms/index.php
+  uid: 606
+  username: Long@123
+  token: Jin@Rong1
+  appid: 1
+  content: 您的注册验证码为：*，10分钟内有效，切勿将验证码泄露于他人。
+  mailFrom: 1057150789@qq.com
+  subject: 邮箱验证

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import demo.config.GlobalException;
 import demo.config.ResultEnum;
+import demo.module.ResponseBean;
 import demo.pojo.User;
 import demo.service.RegService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -61,9 +62,15 @@ public class UserController {
 	@ApiOperation(value = "创建用户信息", notes = "根据User对象创建用户信息")
 	@ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "User")
 	@RequestMapping(value = { "/addNewUser" }, method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	public int addNewUser(@RequestBody Map<String, Object> params) {
+	public ResponseBean addNewUser(@RequestBody Map<String, Object> params) {
 
-		return regService.insert(params);
+		try {
+			regService.insert(params);
+		} catch (Exception e) {
+			return new ResponseBean(500, "addNewUser fail", e.getMessage());
+		}
+
+		return new ResponseBean(200, "addNewUser success", null);
 	}
 
 	@ApiOperation(value = "更新用户信息", notes = "根据User对象更新用户信息")

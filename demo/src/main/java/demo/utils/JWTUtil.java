@@ -18,8 +18,8 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 public class JWTUtil {
 	
 
-	// 过期时间5分钟
-	private static final long EXPIRE_TIME = 5 * 60 * 1000;
+	// 过期时间120分钟
+	private static final long EXPIRE_TIME = 120 * 60 * 1000;
 
 	/**
 	 * 校验token是否正确

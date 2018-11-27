@@ -6,10 +6,32 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 public class Common {
+
+	private static Logger logger = LogManager.getLogger(Common.class);
 
 	public static String getUuid() {
 		return UUID.randomUUID().toString().replace("-", "").toLowerCase();
+	}
+
+	public static String getRandomNumber(int num) {
+
+		if (num == 6) {
+			return Integer.toString((int) ((Math.random() * 9 + 1) * 100000));
+		}
+		if (num == 5) {
+			return Integer.toString((int) ((Math.random() * 9 + 1) * 10000));
+		}
+
+		return Integer.toString((int) ((Math.random() * 9 + 1) * 1000));
+
 	}
 
 	/**
@@ -81,6 +103,29 @@ public class Common {
 
 		return date;
 
+	}
+
+	public static boolean checkFromSession(String inputStr, String sessionName) {
+
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
+				.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest();
+
+		try {
+			// 从session中获取随机数
+			String random = (String) request.getSession().getAttribute(sessionName);
+			if (random == null) {
+				return false;
+			}
+			if (random.equals(inputStr)) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			logger.error("读取" + sessionName + "失败", e);
+			return false;
+		}
 	}
 
 }
