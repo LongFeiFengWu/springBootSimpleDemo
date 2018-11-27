@@ -10,8 +10,8 @@ spring:
         driver-class-name: com.mysql.jdbc.Driver
     mail:
       host: smtp.qq.com
-      username: 1057150789@qq.com
-      password: fwyrcslurbbdbffb
+      username: ******（QQ邮箱账号）
+      password: ******（QQ邮箱中申请授权码）
       properties: 
         smtp:
           auth: true
@@ -52,10 +52,10 @@ ueditor:
   
 sms:
   url: http://sms.91qxt.com/api/sms/index.php
-  uid: 606
-  username: Long@123
-  token: Jin@Rong1
-  appid: 1
+  uid: （短信平台申请）
+  username: （短信平台申请）
+  token: （短信平台申请）
+  appid: （短信平台申请）
   content: 您的注册验证码为：*，10分钟内有效，切勿将验证码泄露于他人。
   mailFrom: 1057150789@qq.com
   subject: 邮箱验证
